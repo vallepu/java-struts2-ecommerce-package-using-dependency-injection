@@ -1,0 +1,62 @@
+
+	need to iterate thru the product list that is loaded into the page. they choose
+	a category, then productaction loads a list of products correlating to that category.
+	
+	when the jsp page Categories.jsp is loaded and the action classes product list is iterated thru
+	and a printed layout of products is loaded into the jsp page.
+	
+	need to look into how to many to layout per product column. 
+ 	what if its on an iphone vs a regular screen?
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	PROBLEM: cant use decorators when u need to process lists and stuff from action classes.
+ 			im almost certain that it doesnt process this. 
+ 				TO BE SURE, CHECK.....
+ 				Outcome of Test: functional or non functional?
+ 				well, in the decorator.xml file there is no place to set what action class goes
+ 				to what decorator with which pattern...
+ 				
+ 					NOTE: DECORATOR THING might work since were having a class that handles this. it all depends
+ 					on how the class gets its info. checking....
+ 					,looks like its getting its info from an action class,but if we used injectors and created everything
+ 					manually in the class itself with no action classes needed then perhaps the decorator will
+ 					be able to retrieve the data without the need for an actionclass which would then allow us to pu the 
+ 					suckerfish categories in the decorator which looks super neat.
+ 					NOTE: THIS will not work as the decorators dont access any action classes and you can only write
+ 					html in them, no java tag libraries.  :(

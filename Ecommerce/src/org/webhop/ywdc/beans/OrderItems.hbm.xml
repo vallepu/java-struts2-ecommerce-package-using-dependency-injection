@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  
+  <class name="org.webhop.ywdc.beans.OrderItems" table="orderitems">
+  
+  <id name="id">
+  	<generator class="native"/>
+  </id>
+  
+ 
+  <property name="orderid"></property>
+  <property name="productname"></property>
+  <property name="price"></property>
+  <property name="productid"></property>
+  <property name="quantity"></property>
+	
+  </class>
+  
+  
+</hibernate-mapping>

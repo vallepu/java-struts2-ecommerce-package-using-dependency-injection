@@ -1,0 +1,465 @@
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	
+	
+	  <constant name="struts.ui.theme" value="simple" />
+	
+	
+	<package name="secure" extends="ssl-default" namespace="/">
+		
+		  <interceptors>
+		  <interceptor name="AuthenticationInterceptor" class="org.webhop.ywdc.admin.AuthenticationInterceptor"></interceptor>
+        <interceptor-stack name="SecureStack">
+        <interceptor-ref name="secure">
+           <param name="useAnnotations">true</param>
+         </interceptor-ref>
+         <interceptor-ref name="defaultStack"/>
+        </interceptor-stack>
+        </interceptors>
+
+		<action name="login" class="org.webhop.ywdc.admin.LoginAction">
+				<interceptor-ref name="params"/>
+				<interceptor-ref name="SecureStack"/>
+				<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+				
+		        <result name="success" type="dispatcher">/adminpages/Index.jsp</result>
+		        <result name="error" type="dispatcher">/adminpages/Login.jsp</result>
+		       
+		</action>
+		<action name="index" class="org.webhop.ywdc.admin.IndexAction" >
+				<interceptor-ref name="SecureStack"/>
+				<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+  				
+			   <interceptor-ref name="AuthenticationInterceptor" />
+			   
+		       <result name="success" type="dispatcher">/adminpages/Index.jsp</result>
+		       <result name="authenticate" type="chain">login</result>
+		</action>
+		<action name="secured" class="org.webhop.ywdc.client.SecureAction">
+		
+			<result>/public/Secure.jsp</result>
+		</action>
+	
+	</package>
+	
+	<package name="org.webhop.ywdc" namespace="/" extends="ssl-default">
+
+		<interceptors>
+			<interceptor name="AuthenticationInterceptor" class="org.webhop.ywdc.admin.AuthenticationInterceptor"></interceptor>
+			 <interceptor-stack name="SecureStack">
+        <interceptor-ref name="secure">
+           <param name="useAnnotations">true</param>
+         </interceptor-ref>
+         <interceptor-ref name="defaultStack"/>
+        </interceptor-stack>
+		
+		</interceptors>
+	
+		
+		
+		<action name="images" class="org.webhop.ywdc.admin.ImagesAction" >
+				<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+  				<interceptor-ref name="SecureStack"/>
+			   <interceptor-ref name="AuthenticationInterceptor" />
+		       <result name="success" type="dispatcher">/dialogadminpages/ProductImages.jsp</result>
+		        <result name="submitted" type="chain">inventorycontrol</result>
+		       <result name="authenticate" type="chain">login</result>
+		       <interceptor-ref name="params"/>
+		</action>
+		
+		<action name="productshipping" class="org.webhop.ywdc.admin.ProductShippingAction" >
+				<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+  				<interceptor-ref name="SecureStack"/>
+			   <interceptor-ref name="AuthenticationInterceptor" />
+		       <result name="success" type="dispatcher">/dialogadminpages/ProductShipping.jsp</result>
+		        <result name="submitted" type="chain">inventorycontrol</result>
+		       <result name="authenticate" type="chain">login</result>
+		       <interceptor-ref name="params"/>
+		</action>
+		
+		<action name="logout" class="org.webhop.ywdc.admin.LogoutAction" >
+				<interceptor-ref name="SecureStack"/>
+		       <result name="success" type="dispatcher">/Index.jsp</result>
+		</action>
+		<action name="companyinformation" class="org.webhop.ywdc.client.CompanyInformationAction" >
+				<interceptor-ref name="SecureStack"/>
+		       <result name="success" type="dispatcher">/public/CompanyInformation.jsp</result>
+		</action>
+		<action name="editcellentry" class="org.webhop.ywdc.admin.EditCellEntryAction">
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+  				<interceptor-ref name="SecureStack"/>
+			   <interceptor-ref name="AuthenticationInterceptor" />
+			   
+			 <result name="success" type="dispatcher">/adminpages/Success.jsp</result>
+		</action>
+		<action name="categoryaction" class="org.webhop.ywdc.admin.CategoryAction">
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+  				<interceptor-ref name="SecureStack"/>
+			   <interceptor-ref name="AuthenticationInterceptor" />
+			   
+			<interceptor-ref name="params"/>
+			<result name="success" type="dispatcher">/dialogadminpages/CategorySelect.jsp</result>
+		</action>
+		
+		<action name="categoryproduct" class="org.webhop.ywdc.client.CategoryProductAction">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			<result name="success" type="dispatcher">/public/CategoryNavigation.jsp</result>
+		</action>
+		<action name="product" class="org.webhop.ywdc.client.ProductAction">
+			
+			<interceptor-ref name="params"/>
+			<result name="success" type="dispatcher">/public/Product.jsp</result>
+		</action>
+		<action name="productinformation" class="org.webhop.ywdc.admin.ProductInformation">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			<result name="success" type="dispatcher">/dialogadminpages/ProductInformation.jsp</result>
+		</action>
+		<action name="cart" class="org.webhop.ywdc.client.CartAction">
+			
+			<interceptor-ref name="params"/>
+			<result name="success" type="dispatcher">/public/Cart.jsp</result>
+		</action>
+		<action name="shippingcarriertool" class="org.webhop.ywdc.admin.ShippingCarrierToolAction">
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+  				<interceptor-ref name="SecureStack"/>
+			   <interceptor-ref name="AuthenticationInterceptor" />
+			   
+			<interceptor-ref name="params"/>
+			<result name="success" type="dispatcher">/adminpages/ShippingCarrierTool.jsp</result>
+			 <result name="authenticate" type="chain">login</result>
+		</action>
+		
+		<action name="ordersindaterange" class="org.webhop.ywdc.admin.OrdersInDateRangeAction">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+			   <interceptor-ref name="AuthenticationInterceptor" />
+			
+			<interceptor-ref name="params"/>
+			<result name="success" type="dispatcher">/adminpages/OrdersInDateRange.jsp</result>
+			 <result name="authenticate" type="chain">login</result>
+		</action>
+		<action name="shippingservicestool" class="org.webhop.ywdc.admin.ShippingServicesToolAction">
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+  				<interceptor-ref name="SecureStack"/>
+			   <interceptor-ref name="AuthenticationInterceptor" />
+			   
+			<interceptor-ref name="params"/>
+			<result name="success" type="dispatcher">/adminpages/ShippingServicesTool.jsp</result>
+			 <result name="authenticate" type="chain">login</result>
+		</action>
+		
+		<action name="shipping" class="org.webhop.ywdc.client.ShippingAction">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			 <result name="input">/public/Shipping.jsp</result>
+			<result name="success" type="chain">shippingcarrier</result>
+		</action>
+		<action name="shippinginput" class="org.webhop.ywdc.client.ShippingAction" method="input">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			 <result name="input">/public/Shipping.jsp</result>
+			
+		</action>
+		
+		<action name="payment" class="org.webhop.ywdc.client.PaymentAction">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			 <result name="input">/public/Payment.jsp</result>
+			<result name="success" type="chain">finalize</result>
+		</action>
+		<action name="paymentinput" class="org.webhop.ywdc.client.PaymentAction" method="input">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			 <result name="input">/public/Payment.jsp</result>
+		</action>
+		
+		
+		<action name="shippingcarrier" class="org.webhop.ywdc.client.ShippingCarrierAction">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			<result name="success" type="dispatcher">/public/ShippingCarrier.jsp</result>
+			<result name="failure" >/public/Shipping.jsp</result> 
+			 <result name="authenticate" type="chain">login</result>
+		</action>
+		<action name="finalize" class="org.webhop.ywdc.client.FinalizeAction">
+			
+			<interceptor-ref name="params"/>
+			<result name="success" type="dispatcher">/public/Finalize.jsp</result>
+			<result name="failure" type="chain">paymentinput</result>
+		</action>
+		
+		<action name="inventorycontrol" class="org.webhop.ywdc.admin.InventoryControlAction">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+			<interceptor-ref name="AuthenticationInterceptor" />
+		
+			 <result name="success" type="dispatcher">/adminpages/InventoryControl.jsp</result>
+			 <result name="authenticate" type="chain">login</result>
+		</action>	
+		<action name="incompleteorder" class="org.webhop.ywdc.admin.IncompleteOrderAction">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+			<interceptor-ref name="AuthenticationInterceptor" />
+		
+			 <result name="success" type="dispatcher">/dialogadminpages/IncompleteOrder.jsp</result>
+			  <result name="submitted" type="chain">incompleteorders</result>
+			 <result name="authenticate" type="chain">login</result>
+		</action>	
+		<action name="generalorder" class="org.webhop.ywdc.admin.GeneralOrderAction">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+			<interceptor-ref name="AuthenticationInterceptor" />
+		
+			 <result name="success" type="dispatcher">/dialogadminpages/GeneralOrder.jsp</result>
+			  <result name="submitted" type="chain">ordersindaterange</result>
+			 <result name="authenticate" type="chain">login</result>
+		</action>	
+		<action name="completeorder" class="org.webhop.ywdc.admin.CompleteOrderAction">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+			<interceptor-ref name="AuthenticationInterceptor" />
+		
+			 <result name="success" type="dispatcher">/dialogadminpages/CompleteOrder.jsp</result>
+			  <result name="submitted" type="chain">completeorders</result>
+			 <result name="authenticate" type="chain">login</result>
+		</action>	
+		<action name="refundedorder" class="org.webhop.ywdc.admin.RefundedOrderAction">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+			<interceptor-ref name="AuthenticationInterceptor" />
+		
+			 <result name="success" type="dispatcher">/dialogadminpages/RefundedOrder.jsp</result>
+			  <result name="submitted" type="chain">refundedorders</result>
+			 <result name="authenticate" type="chain">login</result>
+		</action>	
+		<action name="incompleteorders" class="org.webhop.ywdc.admin.IncompleteOrders">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+			<interceptor-ref name="AuthenticationInterceptor" />
+		
+			 <result name="success" type="dispatcher">/adminpages/IncompleteOrders.jsp</result>
+			 <result name="authenticate" type="chain">login</result>
+		</action>	
+		<action name="refundedorders" class="org.webhop.ywdc.admin.RefundedOrders">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+			<interceptor-ref name="AuthenticationInterceptor" />
+		
+			 <result name="success" type="dispatcher">/adminpages/RefundedOrders.jsp</result>
+			 <result name="authenticate" type="chain">login</result>
+		</action>	
+		<action name="completeorders" class="org.webhop.ywdc.admin.CompleteOrders">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+			<interceptor-ref name="AuthenticationInterceptor" />
+		
+			 <result name="success" type="dispatcher">/adminpages/CompleteOrders.jsp</result>
+			 <result name="authenticate" type="chain">login</result>
+		</action>	
+		
+		<action name="categorycontrol" class="org.webhop.ywdc.admin.CategoryControlAction">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+			<interceptor-ref name="AuthenticationInterceptor" />
+		
+			 <result name="success" type="dispatcher">/adminpages/Categories.jsp</result>
+			 <result name="authenticate" type="chain">login</result>
+		</action>	
+		<action name="categorycontroleditcellentry" class="org.webhop.ywdc.admin.CategoryControlEditCellEntryAction">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  				</interceptor-ref>
+  				
+			   <interceptor-ref name="AuthenticationInterceptor" />
+			   
+			<result name="success" type="dispatcher">/adminpages/Success.jsp</result>
+		</action>									
+		<action name="inventorycontroleditcellentry" class="org.webhop.ywdc.admin.InventoryControlEditCellEntryAction">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  			</interceptor-ref>
+			<interceptor-ref name="AuthenticationInterceptor" />
+			 <result name="success" type="dispatcher">/adminpages/Success.jsp</result>
+		</action>
+		<action name="shippingcarriercontroleditcellentry" class="org.webhop.ywdc.admin.ShippingCarrierControlEditCellEntryAction">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  			</interceptor-ref>
+			<interceptor-ref name="AuthenticationInterceptor" />
+			 <result name="success" type="dispatcher">/adminpages/Success.jsp</result>
+		</action>
+		<action name="shippingserviceseditcellentry" class="org.webhop.ywdc.admin.ShippingServicesControlEditCellEntryAction">
+			<interceptor-ref name="SecureStack"/>
+			<interceptor-ref name="params"/>
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  			</interceptor-ref>
+			<interceptor-ref name="AuthenticationInterceptor" />
+			<result name="success" type="dispatcher">/adminpages/Success.jsp</result>
+		</action>
+	</package>
+	
+	<package name="example" namespace="/" extends="json-default">
+	
+		<result-types>
+        	<result-type name="json" class="com.googlecode.jsonplugin.JSONResult"/>
+    	</result-types>
+	
+		<interceptors>
+			
+		
+		<interceptor name="AuthenticationInterceptor" class="org.webhop.ywdc.admin.AuthenticationInterceptor"></interceptor>
+		</interceptors>
+		
+		<action name="jsoncategoryaction" class="org.webhop.ywdc.admin.JsonCategoryAction">
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  			</interceptor-ref>
+  			<interceptor-ref name="AuthenticationInterceptor" />
+			<result type="json" />
+			 <param name="gridModel">true</param>
+				
+		</action>
+		<action name="jsonincompleteordersaction" class="org.webhop.ywdc.admin.JsonIncompleteOrdersAction">
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  			</interceptor-ref>
+  			<interceptor-ref name="AuthenticationInterceptor" />
+  			<interceptor-ref name="params"/>
+			<result type="json" />
+			 <param name="gridModel">true</param>
+				
+		</action>
+		<action name="jsongeneralorderaction" class="org.webhop.ywdc.admin.JsonGeneralOrderAction">
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  			</interceptor-ref>
+  			<interceptor-ref name="AuthenticationInterceptor" />
+  			<interceptor-ref name="params"/>
+			<result type="json" />
+			 <param name="gridModel">true</param>
+				
+		</action>
+		<action name="jsonrefundedordersaction" class="org.webhop.ywdc.admin.JsonRefundedOrdersAction">
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  			</interceptor-ref>
+  			<interceptor-ref name="AuthenticationInterceptor" />
+  			<interceptor-ref name="params"/>
+			<result type="json" />
+			 <param name="gridModel">true</param>
+				
+		</action>
+		<action name="jsoncompleteordersaction" class="org.webhop.ywdc.admin.JsonCompleteOrdersAction">
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  			</interceptor-ref>
+  			<interceptor-ref name="AuthenticationInterceptor" />
+  			<interceptor-ref name="params"/>
+			<result type="json" />
+			 <param name="gridModel">true</param>
+				
+		</action>
+		<action name="jsonshippingcarrieraction" class="org.webhop.ywdc.admin.JsonShippingCarrierControlAction">
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  			</interceptor-ref>
+  			<interceptor-ref name="AuthenticationInterceptor" />
+  			<interceptor-ref name="params"/>
+			<result type="json" />
+			 <param name="gridModel">true</param>
+				
+		</action>
+		<action name="jsonshippingservicesaction" class="org.webhop.ywdc.admin.JsonShippingServicesControlAction">
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  			</interceptor-ref>
+  			<interceptor-ref name="AuthenticationInterceptor" />
+  			<interceptor-ref name="params"/>
+			<result type="json" />
+			<param name="gridModel">true</param>
+				
+		</action>
+		<action name="jsoninventorycontrolaction" class="org.webhop.ywdc.admin.JsonInventoryControlAction">
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  			</interceptor-ref>
+  			<interceptor-ref name="AuthenticationInterceptor" />
+			<interceptor-ref name="params"/>
+			<result type="json" />	
+		</action>
+		
+		<action name="jsoncategorycontrol" class="org.webhop.ywdc.admin.JsonCategoryControlAction">
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  			</interceptor-ref>
+  			<interceptor-ref name="AuthenticationInterceptor" />
+			<interceptor-ref name="params"/>
+			<result type="json" />	
+		</action>
+		
+		<action name="jsonselectaction" class="org.webhop.ywdc.admin.JsonSelectAction">
+			<interceptor-ref name="cookie">
+     				<param name="cookiesName">UserTempToken</param>
+  			</interceptor-ref>
+  			<interceptor-ref name="AuthenticationInterceptor" />
+			<interceptor-ref name="params"/>
+			<result type="json" />	
+		</action>
+		
+	</package>
+	
+</struts>

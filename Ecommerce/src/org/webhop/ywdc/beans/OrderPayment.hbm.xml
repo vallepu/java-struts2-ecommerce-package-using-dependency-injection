@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  
+  <class name="org.webhop.ywdc.beans.OrderPayment" table="orderpayment">
+  
+  <id name="id">
+  	<generator class="native"/>
+  </id>
+  
+ 
+  <property name="orderid"></property>
+  <property name="orderdate" type="timestamp"></property>
+  <property name="transactionid"></property>
+  <property name="total"></property>
+  <property name="firstname"></property>
+  <property name="lastname"></property>
+  <property name="cardtype"></property>
+  <property name="cardnumber"></property>
+  <property name="expdate"></property>
+  <property name="address"></property>
+  <property name="city"></property>
+  <property name="state"></property>
+  <property name="zipcode"></property>
+  <property name="country"></property>
+  <property name="phonenumber"></property>
+  <property name="email"></property>
+  
+	
+  </class>
+  
+  
+</hibernate-mapping>

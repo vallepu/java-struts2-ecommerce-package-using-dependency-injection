@@ -1,0 +1,50 @@
+<!DOCTYPE validators PUBLIC
+"-//OpenSymphony Group//XWork Validator 1.0.2//EN"
+"http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+
+
+ <field name="fullname">
+      <field-validator type="requiredstring">
+          <message>User Name is required.</message>
+      </field-validator>
+  </field>
+
+  <field name="address">
+      <field-validator type="requiredstring">
+          <message>Address is required.</message>
+      </field-validator>
+  </field>
+ 
+  
+ <field name="city">
+      <field-validator type="requiredstring">
+          <message>City is required.</message>
+      </field-validator>
+  </field>
+ 
+ 
+ <field name="zipcode">
+ 	  <field-validator type="required">
+          <message>ZipCode is required.</message>
+      </field-validator>
+      <field-validator type="int">
+            <message>ZipCode must be an integer</message>
+      </field-validator>
+     
+  </field>
+ 
+ 
+ <field name="phonenumber">
+ 	   <field-validator type="required">
+          <message>phone number is required.</message>
+      </field-validator>
+      <field-validator type="long">
+          <message>Phone number must be an integer</message>
+      </field-validator>
+  </field>
+ 
+ 
+ 
+
+</validators>

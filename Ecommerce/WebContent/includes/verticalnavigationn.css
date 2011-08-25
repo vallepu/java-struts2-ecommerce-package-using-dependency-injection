@@ -1,0 +1,50 @@
+body {
+	font-family: arial, helvetica, serif;
+}
+
+#vertnav, #vertnav ul { /* all lists */
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	line-height: 1;
+}
+
+#vertnav a {
+	display: block;
+	width: 10em;
+	color:#333;
+}
+
+#vertnav li { /* all list items */
+	/*float: left;*/
+	width: 10em; 
+	/* width needed or else Opera goes nuts */
+	background: #6699CC;
+}
+
+#vertnav li ul { /* second-level lists */
+	position: absolute;
+	background: #6699CC;
+	width: 10em;
+	margin: 0 0 0 10em;
+	left: -999em; /* using left instead of display to hide menus because display: none isn't read by screen readers */
+}
+
+#vertnav li ul ul { /* third-and-above-level lists */
+	margin: -1em 0 0 10em;
+}
+
+#vertnav li:hover ul ul, #vertnav li:hover ul ul ul, #vertnav li.sfhover ul ul, #vertnav li.sfhover ul ul ul {
+	left: -999em;
+}
+
+#vertnav li:hover ul, #vertnav li li:hover ul, #vertnav li li li:hover ul, #vertnav li.sfhover ul, #vertnav li li.sfhover ul, #vertnav li li li.sfhover ul { /* lists nested under hovered list items */
+	left: auto;
+	margin-top: -1em;
+}
+
+#content {
+	clear: left;
+	color: #6699CC;
+}
+
