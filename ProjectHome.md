@@ -1,0 +1,4 @@
+Login to the administrative side of the software, create categories and products. Those categories and products show up on the public side. People can then purchase those items on the public side.  Has category/product showcase, cart, shipping estimation calculator, credit card processing using PayPal as a payment gateway.
+Uses google Guice for dependency injection, struts2 as the model view controller, and Java architecture for xml binding (JAXB) for all xml webservice calls.
+Also takes advantage of struts2-jquery-plugin's grid for administrative data layout.
+Code works fine, but the graphic design needs some work done on it.
